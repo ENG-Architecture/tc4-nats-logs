@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  # Servicio para la aplicación Python
+  app:
+    build: .
+    container_name: event_logs_app
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017
+    depends_on:
+      - mongo
+    networks:
+      - app_network
+
+  # Servicio para MongoDB
+  mongo:
+    image: mongo:latest
+    container_name: event_logs_mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - app_network
+
+# Red de contenedores para que se comuniquen entre sí
+networks:
+  app_network:
+    driver: bridge
+
+# Volumen para persistencia de los datos de MongoDB
+volumes:
+  mongo_data:
