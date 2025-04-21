@@ -12,3 +12,9 @@ class EventLog(BaseModel):
     timestamp: datetime
     trace_id: str = Field(default_factory=lambda: str(uuid4()))
     payload: str
+
+class EventLog_Create(BaseModel):
+    environment: str
+    event_type: str
+    timestamp: datetime    
+    payload: str

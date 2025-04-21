@@ -1,14 +1,21 @@
 from fastapi import APIRouter, Query
 from typing import Optional
 from datetime import datetime
-from app.domain.models import EventLog
+from app.domain.models import EventLog, EventLog_Create
 from app.application.services import save_event_log, get_event_logs
 
 router = APIRouter()
 
 @router.post("", summary="Guardar un nuevo log de evento")
-async def create_log(log: EventLog):
-    result = await save_event_log(log)    
+async def create_log(log: EventLog_Create):
+    log_save = EventLog(
+    environment=log.environment,
+    event_type=log.event_type,
+    timestamp=log.timestamp,
+    payload=log.payload
+    )
+    
+    result = await save_event_log(log_save)
     return result
 
 @router.get("", summary="Buscar logs por filtros")
