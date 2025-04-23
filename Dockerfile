@@ -13,8 +13,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copiar todo el código fuente al contenedor
 COPY . /app/
 
+# 👇 Esta línea es clave
+ENV PYTHONUNBUFFERED=1
+
 # Exponer el puerto que usará tu aplicación (por ejemplo, 8000)
 EXPOSE 8000
 
 # Comando para ejecutar la aplicación (en este caso, usando uvicorn para FastAPI)
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["python", "main.py"]
