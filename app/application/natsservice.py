@@ -50,7 +50,8 @@ class LogEventListener:
     async def listen(self):
         await self.connect()
         await self._js.subscribe(
-        subject="teamcore.*",
+        subject="teamcore.>",
         durable="reset_password_listener_logs",
+        stream="teamcore_stream",
         cb=self.handle_message
         )
